@@ -1,26 +1,38 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
-import { fetchCount } from './WorkDayListAPI';
 
 export interface WorkDayListState {
-  data: string;
+  requestInfo: any;
+  projects: any;
+  workDays: any;
+  workUnits: any;
   status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: WorkDayListState = {
-  data: "No user selected.",
+  requestInfo: null,
+  projects: [],
+  workDays: [],
+  workUnits: [],
   status: 'idle',
 };
 
 export const getWorkDayList = createAsyncThunk(
   'workDayList/getWorkDayList',
-  async () => {
-    let responseX = null;
-    await fetch("/userData")
+  async (userId: string) => {
+    let theResponse = null;
+    await fetch("/userData", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+     body: JSON.stringify({id: userId})
+    })
     .then((response) => response.json())
-    .then((data) => responseX = data)
+    .then((data) => theResponse = data)
     .catch(error => console.log('ERROR: ', error));
-    return !responseX ? responseX :responseX["b8173d03-f47b-423d-a074-8076c9b7bba9"];
+    return theResponse;
   }
 );
 
@@ -35,7 +47,11 @@ export const counterSlice = createSlice({
       })
       .addCase(getWorkDayList.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.data = JSON.stringify(action.payload);
+        if(!!action.payload) {
+          state.projects = action.payload["projects"] || null;
+          state.workDays = action.payload["workDays"] || null;
+          state.workUnits = action.payload["workUnits"] || null;
+        }
       })
       .addCase(getWorkDayList.rejected, (state) => {
         state.status = 'failed';

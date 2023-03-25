@@ -17,16 +17,23 @@ export function WorkDayList() {
 
   useEffect(()=>{
     if(userInfo.isLoggedIn){
-      dispatch(getWorkDayList())
+      dispatch(getWorkDayList(userInfo.id))
     }
   },[userInfo])
+
+  const projectsList = workDayList.projects.map((project: string) => JSON.stringify(project));
 
   return (
     <Container>
       <Row>
         <Col>
           {userInfo.isLoggedIn ? 
-            <span>{JSON.stringify(workDayList.data)}</span>
+            <div>
+              <h2>Projects:</h2>
+              {projectsList.map((project: any) => (
+                project
+              ))}
+            </div>
             :
             <span>Log in to view your stats and achievements.</span>
           }
