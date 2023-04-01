@@ -1,8 +1,8 @@
 import {useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { getWorkDayList } from './workDayListSlice';
-import { selectWorkDayList } from './workDayListSlice';
+import { getUserData } from '../userData/userDataSlice';
+import { selectUserData } from '../userData/userDataSlice';
 import { selectUserInfo } from '../userInfo/userInfoSlice';
 
 import Container from 'react-bootstrap/Container';
@@ -12,12 +12,12 @@ import Col from 'react-bootstrap/Col';
 export function WorkDayList() {
   const dispatch = useAppDispatch();
 
-  const workDayList = useAppSelector(selectWorkDayList);
+  const workDayList = useAppSelector(selectUserData);
   const userInfo = useAppSelector(selectUserInfo);
 
   useEffect(()=>{
     if(userInfo.isLoggedIn){
-      dispatch(getWorkDayList(userInfo.id))
+      dispatch(getUserData(userInfo.id))
     }
   },[userInfo])
 

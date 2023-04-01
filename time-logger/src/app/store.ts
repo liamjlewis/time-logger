@@ -3,7 +3,6 @@ import counterReducer from '../features/counter/counterSlice';
 import usersReducer from '../features/counter/usersSlice';
 import userInfoReducer from '../features/userInfo/userInfoSlice';
 import userDataReducer from '../features/userData/userDataSlice';
-import workDaysReducer from '../features/workDayList/workDayListSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +10,6 @@ export const store = configureStore({
     users: usersReducer,
     userInfo: userInfoReducer,
     userData: userDataReducer,
-    workDayList: workDaysReducer,
   },
 });
 
