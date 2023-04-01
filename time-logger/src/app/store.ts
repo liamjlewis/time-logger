@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import usersReducer from '../features/counter/usersSlice';
 import userInfoReducer from '../features/userInfo/userInfoSlice';
+import userDataReducer from '../features/userData/userDataSlice';
 import workDaysReducer from '../features/workDayList/workDayListSlice';
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     counter: counterReducer,
     users: usersReducer,
     userInfo: userInfoReducer,
+    userData: userDataReducer,
     workDayList: workDaysReducer,
   },
 });
