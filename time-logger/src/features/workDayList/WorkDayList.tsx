@@ -21,24 +21,33 @@ export function WorkDayList() {
     }
   },[userInfo])
 
-  const projectsList = workDayList.projects.map((project: string) => JSON.stringify(project));
-
   return (
-    <Container>
-      <Row>
-        <Col>
-          {userInfo.isLoggedIn ? 
-            <div>
-              <h2>Projects:</h2>
-              {projectsList.map((project: any) => (
-                project
-              ))}
-            </div>
-            :
-            <span>Log in to view your stats and achievements.</span>
-          }
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      <Container>
+        <Row>
+          <Col>
+            <h2>Projects:</h2>
+          </Col>
+        </Row>
+      </Container>
+      {userInfo.isLoggedIn &&  
+        <Container>
+          {workDayList.workDays.map((workDay: any) => (
+            <Row>
+              <Col>
+                  <h4>
+                    { workDay.date }
+                  </h4>
+              </Col>
+              <Col>
+                  <h4>
+                    { workDay.dayNotes }
+                  </h4>
+              </Col>
+            </Row>
+          ))}
+        </Container>
+      }
+    </div>
   );
 }
