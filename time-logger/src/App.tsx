@@ -1,5 +1,6 @@
 import { UserInfo } from './features/userInfo/UserInfo';
 import { WorkDayList } from './features/workDayList/WorkDayList';
+import { KeyStats } from './features/keyStats/KeyStats';
 import './App.scss';
 
 import Container from 'react-bootstrap/Container';
@@ -32,19 +33,7 @@ function App() {
         <h1>Where does the time go?</h1>
       </header>
       <main>
-        <Container>
-          <Row>
-            <Col sm={12} md={4}>
-              <LineChart/>
-            </Col>
-            <Col sm={12} md={4}>
-              <LineChart/>
-            </Col>
-            <Col sm={12} md={4}>
-              <LineChart/>
-            </Col>
-          </Row>
-        </Container>
+        <KeyStats />
         <WorkDayList />
       </main>
     </div>

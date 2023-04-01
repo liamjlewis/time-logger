@@ -36,7 +36,7 @@ export const getWorkDayList = createAsyncThunk(
   }
 );
 
-export const counterSlice = createSlice({
+export const workDayList = createSlice({
   name: 'workDayList',
   initialState,
   reducers: {},
@@ -59,9 +59,9 @@ export const counterSlice = createSlice({
   },
 });
 
-//export const { getWorkDayList } = counterSlice.actions;
+//export const { getWorkDayList } = workDayList.actions;
 
 export const selectWorkDayList = (state: RootState) => state.workDayList;
 
 
-export default counterSlice.reducer;
+export default workDayList.reducer;
