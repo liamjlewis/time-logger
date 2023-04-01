@@ -6,6 +6,8 @@ $theme-colors: (
 
 @import "~bootstrap/scss/bootstrap";
 
+@import "./components/components.scss";
+
 /* Colours */
 $background: #fffdf9;
 $super-dark: #675c48;
