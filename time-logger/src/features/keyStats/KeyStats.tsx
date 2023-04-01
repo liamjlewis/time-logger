@@ -1,4 +1,4 @@
-import {useEffect } from 'react';
+import {useEffect, useState } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectUserData } from '../userData/userDataSlice';
@@ -9,29 +9,30 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LineChart from '../../components/lineChart';
 
+import { workUnitsForLineChart } from '../../utilities';
+
 export function KeyStats() {
-  const workDayList = useAppSelector(selectUserData);
+  const userData = useAppSelector(selectUserData);
   const userInfo = useAppSelector(selectUserInfo);
+  
+  const [workUnitsProcessed, setWorkUnitsProcessed] = useState<any[]>([]);
 
   useEffect(() => {
-    console.log("would this actually change is the redux state changes? because it's a var set by props and not the prop itself");
-    // build a utility function that takes redux state data and fires it out properly formatted Nivo data - type check data going in and out.
-  }, [workDayList])
-
-  const theDataTemp = [{"id":"dd643729-0d8c-4a32-a9d7-9aa291cf5021","data":[{"x":"27-02-23","y":3}]},{"id":"50d4df9a-e12b-40b9-9693-cf596fbdc713","data":[{"x":"26-02-23","y":1},{"x":"27-02-23","y":1}]}];
+    setWorkUnitsProcessed(workUnitsForLineChart(userData.workUnits));
+  }, [userData])
 
   return (
     <Container>
         {userInfo.isLoggedIn ? 
           <Row>
             <Col sm={12} md={4}>
-              <LineChart data={theDataTemp} />
+              <LineChart data={workUnitsProcessed} />
             </Col>
             <Col sm={12} md={4}>
-              {JSON.stringify(workDayList)}
+              <LineChart data={workUnitsProcessed} />
             </Col>
             <Col sm={12} md={4}>
-              <LineChart data={theDataTemp} />
+              <LineChart data={workUnitsProcessed} />
             </Col>
           </Row>
         :
