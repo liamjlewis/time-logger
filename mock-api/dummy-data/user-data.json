@@ -6,24 +6,53 @@
                 "id": "50d4df9a-e12b-40b9-9693-cf596fbdc713",
                 "name": "Decorating",
 			    "description": "Decorate the living room.",
+                "colour": "orange",
 			    "createdTimestamp": 1677410664986
+            },
+            {
+                "id": "dd643729-0d8c-4a32-a9d7-9aa291cf5021",
+                "name": "Coding",
+			    "description": "Work on coding projects",
+                "colour": "purple",
+			    "createdTimestamp": 1677500058475
             }
         ],
         "workDays": [
             {
                 "id": "37b63886-2ebb-4339-a984-120130ca49cf",
                 "date": "26-02-23",
-			    "dayNotes": "Cleared the room and applied masking tape to the edge of fixtures.",
+			    "dayNotes": "Cleared the room and applied masking tape to the edge of fixtures."
             },
             {
                 "id": "579585f9-c7c8-44c5-985a-cf7839de235c",
                 "date": "27-02-23",
-			    "dayNotes": "Cleared the room and applied masking tape to the edge of fixtures.",
+			    "dayNotes": "Cleared the room and applied masking tape to the edge of fixtures. Coded in the afternoon.",
                 "notifications": "n1",
                 "acheivements": "a1"
             }
         ],
         "workUnits": [
+            {
+                "id": "445da2f1-c9eb-45e8-9e80-a22bb9c04b6d",
+                "workDayId": "579585f9-c7c8-44c5-985a-cf7839de235c",
+			    "projectId": "dd643729-0d8c-4a32-a9d7-9aa291cf5021",
+                "date": "27-02-23",
+			    "createdTimestamp": 1677510058475
+            },
+            {
+                "id": "445da2f1-c9eb-45e8-9e80-a22bb9c04b6d",
+                "workDayId": "579585f9-c7c8-44c5-985a-cf7839de235c",
+			    "projectId": "dd643729-0d8c-4a32-a9d7-9aa291cf5021",
+                "date": "27-02-23",
+			    "createdTimestamp": 1677520058475
+            },
+            {
+                "id": "445da2f1-c9eb-45e8-9e80-a22bb9c04b6d",
+                "workDayId": "579585f9-c7c8-44c5-985a-cf7839de235c",
+			    "projectId": "dd643729-0d8c-4a32-a9d7-9aa291cf5021",
+                "date": "27-02-23",
+			    "createdTimestamp": 1677530058475
+            },
             {
                 "id": "03d096e2-be09-49c1-a6e1-beddf0546977",
                 "workDayId": "37b63886-2ebb-4339-a984-120130ca49cf",
@@ -36,7 +65,7 @@
                 "workDayId": "579585f9-c7c8-44c5-985a-cf7839de235c",
 			    "projectId": "50d4df9a-e12b-40b9-9693-cf596fbdc713",
                 "date": "27-02-23",
-			    "createdTimestamp": 1677499884986
+			    "createdTimestamp": 1677494884986
             }
         ]
     }
