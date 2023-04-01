@@ -29,6 +29,16 @@
 			    "dayNotes": "Cleared the room and applied masking tape to the edge of fixtures. Coded in the afternoon.",
                 "notifications": "n1",
                 "acheivements": "a1"
+            },
+            {
+                "id": "efa42738-d17d-4923-8bdc-e48378189318",
+                "date": "01-03-23",
+			    "dayNotes": "Paint first coat, more coding."
+            },
+            {
+                "id": "7da79097-6a25-4d94-8600-2ff18b42c2a3",
+                "date": "02-03-23",
+			    "dayNotes": "Paint second coat, coding."
             }
         ],
         "workUnits": [
@@ -66,6 +76,76 @@
 			    "projectId": "50d4df9a-e12b-40b9-9693-cf596fbdc713",
                 "date": "27-02-23",
 			    "createdTimestamp": 1677494884986
+            },
+            {
+                "id": "03d096e2-be09-49c1-a6e1-beddf0546977",
+                "workDayId": "efa42738-d17d-4923-8bdc-e48378189318",
+			    "projectId": "50d4df9a-e12b-40b9-9693-cf596fbdc713",
+                "date": "01-03-23",
+			    "createdTimestamp": 1677661000000
+            },
+            {
+                "id": "81f16df4-7fe9-4967-941c-940599626c8f",
+                "workDayId": "efa42738-d17d-4923-8bdc-e48378189318",
+			    "projectId": "50d4df9a-e12b-40b9-9693-cf596fbdc713",
+                "date": "01-03-23",
+			    "createdTimestamp": 1677662000000
+            },
+            {
+                "id": "0049ba35-debe-435f-bcf5-4b328fe7be07",
+                "workDayId": "efa42738-d17d-4923-8bdc-e48378189318",
+			    "projectId": "50d4df9a-e12b-40b9-9693-cf596fbdc713",
+                "date": "01-03-23",
+			    "createdTimestamp": 1677663000000
+            },
+            {
+                "id": "098e1a2e-b9bb-4241-a70b-f9c67f2c8afd",
+                "workDayId": "efa42738-d17d-4923-8bdc-e48378189318",
+			    "projectId": "50d4df9a-e12b-40b9-9693-cf596fbdc713",
+                "date": "01-03-23",
+			    "createdTimestamp": 1677664000000
+            },
+            {
+                "id": "0f94e9ae-ac07-4d08-8aca-309f61fb1684",
+                "workDayId": "efa42738-d17d-4923-8bdc-e48378189318",
+			    "projectId": "50d4df9a-e12b-40b9-9693-cf596fbdc713",
+                "date": "01-03-23",
+			    "createdTimestamp": 1677665000000
+            },
+            {
+                "id": "56cb2e31-3c49-4df9-8016-5ab060078b30",
+                "workDayId": "efa42738-d17d-4923-8bdc-e48378189318",
+			    "projectId": "50d4df9a-e12b-40b9-9693-cf596fbdc713",
+                "date": "01-03-23",
+			    "createdTimestamp": 1677666000000
+            },
+            {
+                "id": "bdabcd82-8b5c-4708-a3b4-618d080b0544",
+                "workDayId": "efa42738-d17d-4923-8bdc-e48378189318",
+			    "projectId": "dd643729-0d8c-4a32-a9d7-9aa291cf5021",
+                "date": "01-03-23",
+			    "createdTimestamp": 1677667000000
+            },
+            {
+                "id": "2d7cfc99-d889-40d8-b7da-46a43474ab41",
+                "workDayId": "efa42738-d17d-4923-8bdc-e48378189318",
+			    "projectId": "dd643729-0d8c-4a32-a9d7-9aa291cf5021",
+                "date": "01-03-23",
+			    "createdTimestamp": 1677668000000
+            },
+            {
+                "id": "dbe28a14-600e-410c-be9d-ef6ce965688e",
+                "workDayId": "7da79097-6a25-4d94-8600-2ff18b42c2a3",
+			    "projectId": "50d4df9a-e12b-40b9-9693-cf596fbdc713",
+                "date": "02-03-23",
+			    "createdTimestamp": 1677750000000
+            },
+            {
+                "id": "286a0408-18c5-4f2a-8dd0-8ab3aaf59bba",
+                "workDayId": "7da79097-6a25-4d94-8600-2ff18b42c2a3",
+			    "projectId": "dd643729-0d8c-4a32-a9d7-9aa291cf5021",
+                "date": "02-03-23",
+			    "createdTimestamp": 1677760000000
             }
         ]
     }
