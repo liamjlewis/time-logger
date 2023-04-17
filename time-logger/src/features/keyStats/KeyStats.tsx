@@ -7,41 +7,62 @@ import { selectUserInfo } from '../userInfo/userInfoSlice';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import LineChart from '../../components/lineChart';
+import Spinner from '../../components/Spinner';
+import LineChart from '../../components/LineChart';
+import StackedBarChart from '../../components/StackedBarChart';
 
-import { workUnitsForLineChart } from '../../utilities';
+import { workUnitsForLineChart, LineChartDataType } from '../../utilities';
 
 export function KeyStats() {
   const userData = useAppSelector(selectUserData);
   const userInfo = useAppSelector(selectUserInfo);
   
-  const [workUnitsProcessed, setWorkUnitsProcessed] = useState<any[]>([]);
+  const [workUnitsProcessed, setWorkUnitsProcessed] = useState<LineChartDataType | null>(null);
 
   useEffect(() => {
-    setWorkUnitsProcessed(workUnitsForLineChart(userData.workUnits));
+    setWorkUnitsProcessed(workUnitsForLineChart(userData.workUnits, userData.projects));
+    //NOTE: this needs to limit the data to the last week since it's supposed to just be a quick overview
+    // NOTE: setWorkUnitsProcessed is being called more than it should be, look into this?
   }, [userData])
 
   return (
-    <Container>
-        {userInfo.isLoggedIn ? 
-          <Row>
-            <Col sm={12} md={4}>
-              <LineChart data={workUnitsProcessed} />
-            </Col>
-            <Col sm={12} md={4}>
-              <LineChart data={workUnitsProcessed} />
-            </Col>
-            <Col sm={12} md={4}>
-              <LineChart data={workUnitsProcessed} />
-            </Col>
-          </Row>
-        :
+    <div>
+      {userInfo.isLoggedIn ? 
+        <div>
+          {workUnitsProcessed ? 
+            <Container>
+              <Row>
+                <Col sm={12}>
+                  <StackedBarChart data={workUnitsProcessed} fullscreen={true} />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={12} md={4}>
+                  <LineChart data={workUnitsProcessed} fullscreen={true} />
+                </Col>
+                <Col sm={12} md={4}>
+                  <LineChart data={workUnitsProcessed} fullscreen={true} />
+                </Col>
+                <Col sm={12} md={4}>
+                  <LineChart data={workUnitsProcessed} fullscreen={true} />
+                </Col>
+              </Row>
+            </Container>
+          :
+            <Container>
+              <Spinner />
+            </Container>
+          }
+        </div>
+      :
+        <Container>
           <Row>
             <Col>
               <p>Log in to view your stats and achievements.</p>
             </Col>
           </Row>
-        }
-    </Container>
+        </Container>
+      }
+    </div>
   );
 }

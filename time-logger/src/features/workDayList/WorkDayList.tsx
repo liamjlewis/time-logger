@@ -33,7 +33,7 @@ export function WorkDayList() {
       {userInfo.isLoggedIn &&  
         <Container>
           {workDayList.workDays.map((workDay: any) => (
-            <Row>
+            <Row key={workDay.id}>
               <Col>
                   <h4>
                     { workDay.date }

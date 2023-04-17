@@ -1,15 +1,32 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 
-export interface UserDataState {
+export interface ProjectType { // NOTE: shouldn't this come from the API?
+  id: string;
+  ref: string;
+  name: string;
+  description: string;
+  colour: string;
+  createdTimestamp: number;
+}
+
+export interface WorkUnitType { // NOTE: shouldn't this come from the API?
+  id: string;
+  workDayId: string;
+  projectId: string;
+  date: string;
+  createdTimeStamp: number;
+}
+
+export interface UserDataStateType {
   requestInfo: any;
-  projects: any;
+  projects: ProjectType[];
   workDays: any;
-  workUnits: any;
+  workUnits: WorkUnitType[];
   status: 'idle' | 'loading' | 'failed';
 }
 
-const initialState: UserDataState = {
+const initialState: UserDataStateType = {
   requestInfo: null,
   projects: [],
   workDays: [],
@@ -36,7 +53,7 @@ export const getUserData = createAsyncThunk(
   }
 );
 
-export const counterSlice = createSlice({
+export const userDataSlice = createSlice({
   name: 'userData',
   initialState,
   reducers: {},
@@ -62,4 +79,4 @@ export const counterSlice = createSlice({
 export const selectUserData = (state: RootState) => state.userData;
 
 
-export default counterSlice.reducer;
+export default userDataSlice.reducer;

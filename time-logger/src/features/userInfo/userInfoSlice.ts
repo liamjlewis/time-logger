@@ -38,7 +38,7 @@ export const getUserInfo = createAsyncThunk(
   }
 );
 
-export const counterSlice = createSlice({
+export const userInfoSlice = createSlice({
   name: 'userInfo',
   initialState,
   reducers: {},
@@ -69,9 +69,9 @@ export const counterSlice = createSlice({
   },
 });
 
-//export const { getUserInfo } = counterSlice.actions;
+//export const { getUserInfo } = userInfoSlice.actions;
 
 export const selectUserInfo = (state: RootState) => state.userInfo;
 
 
-export default counterSlice.reducer;
+export default userInfoSlice.reducer;
