@@ -19,14 +19,21 @@ $theme-colors: (
     "col13": hsl(30, 50%, 50%),
 );
 /* NOTE: the above colours should be generated from the constants JS file as part of the build process, but that's a task for another day */
-
-@import "~bootstrap/scss/bootstrap";
-
-@import "./components/components.scss";
+/* NOTE: the above colours should be accessible for people with colour blindness and impaired vision, test the contrast ratios */
 
 /* Colours */
 $background: #fffdf9;
 $super-dark: #675c48;
+
+/* mixins */
+@mixin graph-bg {
+  background: linear-gradient(-90deg,rgba(200,200,200,.08) 1px,transparent 1px),linear-gradient(rgba(200,200,200,.08) 1px,transparent 1px),linear-gradient(-90deg,rgba(200,200,200,.04) 1px,transparent 1px),linear-gradient(rgba(200,200,200,.04) 1px,transparent 1px),linear-gradient(transparent 5px,$background 5px,$background 118px,transparent 118px),linear-gradient(-90deg,rgba(200,200,200,.2) 1px,transparent 1px),linear-gradient(-90deg,transparent 5px,$background 5px,$background 118px,transparent 118px),linear-gradient(rgba(200,200,200,.2) 1px,transparent 1px),$background;
+  background-size: 6px 6px,6px 6px,120px 120px,120px 120px,120px 120px,120px 120px,120px 120px,120px 120px;
+}
+
+/* Imports */
+@import "~bootstrap/scss/bootstrap";
+@import "./components/components.scss";
 
 body {
   margin: 0;

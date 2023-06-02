@@ -36,12 +36,12 @@ export function WorkDayList() {
         <Container>
           {userData.workDays.map((workDay: any) => (
             <Row key={workDay.id} className="work-day-row">
-              <Col sm={2} className="work-day-row__date-col">
+              <Col sm={12} className="work-day-row__date-col">
                   <h3>
                     { workDay.date }
                   </h3>
               </Col>
-              <Col sm={10} className="work-day-row__work-units-col">
+              <Col sm={12} className="work-day-row__work-units-col">
                 <Container>
                   {workDay.dayNotes && 
                     <Row>
