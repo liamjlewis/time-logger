@@ -15,3 +15,15 @@
 nav {
   font-size: 2rem;
 }
+
+.work-day-row {
+  &__date-col {
+    background: rgba(0,0,0,0.05);
+    padding: 1rem;
+  }
+  &__work-units-col {
+    background: rgba(0,0,0,0.025);
+    padding: 1rem;
+  }
+
+}

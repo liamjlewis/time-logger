@@ -73,3 +73,16 @@ export const makeDatesArray = (start: string, end: string, callback: (arg: strin
     }
     return arr;
 }
+
+export const groupArrayByProperty = (arr: Array<any>, property: string) => {
+    return arr.reduce(function(memo, x) {
+      if (!memo[x[property]]) { memo[x[property]] = []; }
+      memo[x[property]].push(x);
+      return memo;
+    }, {});
+  }
+
+export const getProjectById = (projectArray: Array<ProjectType>, id: string): ProjectType => {
+    const foundProject = projectArray.find((p) => p.id === id);
+    return foundProject ? foundProject : {} as ProjectType;
+}

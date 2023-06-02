@@ -1,8 +1,24 @@
 /* Boostrap customizations */
 $theme-colors: (
-    "info": orange,
-    "danger": teal
+    "primary": rgb(205, 83, 71),
+    "secondary": rgb(99, 132, 255),
+    "info": rgb(200,200,200),
+    "danger": teal,
+    "col1": hsl(360, 50%, 50%),
+    "col2": hsl(300, 50%, 50%),
+    "col3": hsl(240, 50%, 50%),
+    "col4": hsl(180, 50%, 50%),
+    "col5": hsl(120, 50%, 50%),
+    "col6": hsl(60, 50%, 50%),
+    "col7": hsl(0, 50%, 50%),
+    "col8": hsl(330, 50%, 50%),
+    "col9": hsl(270, 50%, 50%),
+    "col10": hsl(210, 50%, 50%),
+    "col11": hsl(150, 50%, 50%),
+    "col12": hsl(90, 50%, 50%),
+    "col13": hsl(30, 50%, 50%),
 );
+/* NOTE: the above colours should be generated from the constants JS file as part of the build process, but that's a task for another day */
 
 @import "~bootstrap/scss/bootstrap";
 
@@ -42,4 +58,17 @@ h1 {
   border-top: 1px solid #c9c9c9;
   border-bottom: 1px solid #c9c9c9;
   padding: 1rem 0;
+}
+
+h2 {
+  font-family: "helvetica neue";
+  letter-spacing: 1rem;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 5rem;
+  margin: 2rem 0;
+}
+
+.row+.row { /* NOTE: this should be included in bootstrap, look into why it doesn't seem to appear in this project */
+  margin-top: 1rem;
 }
