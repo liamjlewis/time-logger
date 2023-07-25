@@ -17,4 +17,14 @@ router.post('/', async function(req, res, next) {
   }
 });
 
+/* DELETE a user's workUnit. */
+router.delete('/workUnit', async function(req, res, next) {
+  if (!req.body.id) {
+    res.status(400).send('id of workUnit is required')
+  } else {
+    // for now just pretend to delete the work unit since we're not using a real database
+    res.status(200).send();
+  }
+});
+
 module.exports = router;

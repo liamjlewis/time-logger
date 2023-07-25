@@ -53,6 +53,28 @@ export const getUserData = createAsyncThunk(
   }
 );
 
+export const deleteWorkUnit = createAsyncThunk(
+  'userData/deleteWorkUnit',
+  async (workUnitId: string) => {
+    let theResponse = null;
+    await fetch("/userData/workUnit", {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+     body: JSON.stringify({id: workUnitId})
+    })
+    .then((response) => {
+      if(response.status === 200){
+        theResponse = workUnitId; // this is used as the action payload so the workUnit can be deleted in the redux store too
+      }
+    })
+    .catch(error => console.log('ERROR: ', error));
+    return theResponse;
+  }
+);
+
 export const userDataSlice = createSlice({
   name: 'userData',
   initialState,
@@ -72,7 +94,27 @@ export const userDataSlice = createSlice({
       })
       .addCase(getUserData.rejected, (state) => {
         state.status = 'failed';
+      })
+
+      // deleteWorkUnit
+      .addCase(deleteWorkUnit.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteWorkUnit.fulfilled, (state: UserDataStateType, action) => {
+        state.status = 'idle';
+        console.log('why no change state? ', action.payload)
+        if(!!action.payload) {
+          console.log('delete workUnit', action.payload);
+          const index = state.workUnits.findIndex((item: WorkUnitType) => item.id === action.payload);
+          if (index !== -1) {
+            state.workUnits.splice(index, 1);
+          }
+        }
+      })
+      .addCase(deleteWorkUnit.rejected, (state) => {
+        state.status = 'failed';
       });
+
   },
 });
 
