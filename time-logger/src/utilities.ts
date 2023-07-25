@@ -1,4 +1,5 @@
 import { ProjectType, WorkUnitType } from "./features/userData/userDataSlice";
+import { v4 as uuidv4 } from "uuid";
 
 export interface LineChartDataType {
     data: Array<LineChartDataDataType>;
@@ -38,7 +39,7 @@ export const workUnitsForLineChart = (workUnits: WorkUnitType[], projects: Proje
 
     makeDatesArray(workUnits[0].date, workUnits[workUnits.length - 1].date, (theDate) => {
         returnObject.data.push({
-            name: theDate.slice(0, 10)
+            name: theDate.slice(0, 10) // NOTE: can this use shortDateFormat(theDate) ? I don't have time to try and test it now
         })
     });
 
@@ -86,3 +87,13 @@ export const getProjectById = (projectArray: Array<ProjectType>, id: string): Pr
     const foundProject = projectArray.find((p) => p.id === id);
     return foundProject ? foundProject : {} as ProjectType;
 }
+
+export const shortDateFormat = (dateAsISOString?: string):string => {
+    if(dateAsISOString) {
+        return new Date(dateAsISOString).toISOString().slice(0, 10);
+    } else {
+        return new Date().toISOString().slice(0, 10);
+    }
+}
+
+export const uidGen = () => (uuidv4()); // it's worth putting this in utilities for now in case the UID format needs to be customised globally in the future

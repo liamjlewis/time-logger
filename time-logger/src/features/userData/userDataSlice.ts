@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
+import { uidGen, shortDateFormat } from '../../utilities';
 
 export interface ProjectType { // NOTE: shouldn't this come from the API?
   id: string;
@@ -48,6 +49,40 @@ export const getUserData = createAsyncThunk(
     })
     .then((response) => response.json())
     .then((data) => theResponse = data)
+    .catch(error => console.log('ERROR: ', error));
+    return theResponse;
+  }
+);
+
+interface CreateWorkUnitPropsType {
+  theWorkDayId: string;
+  theProjectId: string;
+}
+
+export const createWorkUnit = createAsyncThunk(
+  'userData/createWorkUnit',
+  async (props: CreateWorkUnitPropsType) => {
+    let theResponse = null;
+    const newWorkUnit: WorkUnitType = {
+      id: uidGen(),
+      workDayId: props.theWorkDayId,
+      projectId: props.theProjectId,
+      date: shortDateFormat(),
+      createdTimeStamp: Date.now(),
+    }
+    await fetch("/userData/workUnit", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+     body: JSON.stringify(newWorkUnit)
+    })
+    .then((response) => {
+      if(response.status === 201){
+        theResponse = newWorkUnit;
+      }
+    })
     .catch(error => console.log('ERROR: ', error));
     return theResponse;
   }
@@ -102,9 +137,7 @@ export const userDataSlice = createSlice({
       })
       .addCase(deleteWorkUnit.fulfilled, (state: UserDataStateType, action) => {
         state.status = 'idle';
-        console.log('why no change state? ', action.payload)
         if(!!action.payload) {
-          console.log('delete workUnit', action.payload);
           const index = state.workUnits.findIndex((item: WorkUnitType) => item.id === action.payload);
           if (index !== -1) {
             state.workUnits.splice(index, 1);
@@ -112,6 +145,21 @@ export const userDataSlice = createSlice({
         }
       })
       .addCase(deleteWorkUnit.rejected, (state) => {
+        state.status = 'failed';
+      })
+      
+      // createWorkUnit
+      .addCase(createWorkUnit.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(createWorkUnit.fulfilled, (state: UserDataStateType, action) => {
+        state.status = 'idle';
+        if(!!action.payload) {
+          console.log('create workUnit', action.payload);
+            state.workUnits.push(action.payload);
+        }
+      })
+      .addCase(createWorkUnit.rejected, (state) => {
         state.status = 'failed';
       });
 

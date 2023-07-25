@@ -1,7 +1,7 @@
 import {useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { getUserData, WorkUnitType, deleteWorkUnit } from '../userData/userDataSlice';
+import { getUserData, WorkUnitType, deleteWorkUnit, createWorkUnit } from '../userData/userDataSlice';
 import { selectUserData } from '../userData/userDataSlice';
 import { selectUserInfo } from '../userInfo/userInfoSlice';
 
@@ -48,11 +48,16 @@ export function WorkUnitList(props: WorkUnitListProps) {
                 <h5>
                   {getProjectById(userData.projects, projectId).name}
                 </h5>
-                {workUnitsListedByProjectId[projectId].map((workUnit) => (
-                  <span>
-                    <Badge pill bg={getProjectById(userData.projects, projectId).colour}>{new Date(workUnit.createdTimeStamp).toLocaleString()} <span onClick={() => dispatch(deleteWorkUnit(workUnit.id))}>&#9447;</span></Badge>
-                    &nbsp;
-                  </span>
+                {workUnitsListedByProjectId[projectId].map((workUnit, index) => (
+                  <>
+                    <span>
+                      <Badge pill bg={getProjectById(userData.projects, projectId).colour}>{new Date(workUnit.createdTimeStamp).toLocaleString()} <span onClick={() => dispatch(deleteWorkUnit(workUnit.id))}>&#9447;</span></Badge>
+                      &nbsp;
+                    </span>
+                    {(index + 1) === workUnitsListedByProjectId[projectId].length && 
+                      <Badge pill bg={getProjectById(userData.projects, projectId).colour} onClick={() => dispatch(createWorkUnit({theWorkDayId: workUnit.workDayId, theProjectId: projectId}))}><span>+</span></Badge>
+                    }
+                  </>
                 ))}
             </Col>
           </Row>
