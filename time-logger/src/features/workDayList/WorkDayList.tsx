@@ -28,7 +28,7 @@ export function WorkDayList() {
       <Container>
         <Row>
           <Col>
-            <h2>Projects:</h2>
+            <h2>Work days:</h2>
           </Col>
         </Row>
       </Container>

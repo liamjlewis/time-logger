@@ -11,7 +11,7 @@ export interface ProjectType { // NOTE: shouldn't this come from the API?
   createdTimestamp: number;
 }
 
-export interface WorkUnitType { // NOTE: shouldn't this come from the API?
+export interface WorkUnitType { // NOTE: shouldn't these come from the API?
   id: string;
   workDayId: string;
   projectId: string;
@@ -19,10 +19,15 @@ export interface WorkUnitType { // NOTE: shouldn't this come from the API?
   createdTimeStamp: number;
 }
 
+export interface WorkDayType {
+  name: string;
+  [key: string]: number | string;
+}
+
 export interface UserDataStateType {
   requestInfo: any;
   projects: ProjectType[];
-  workDays: any;
+  workDays: WorkDayType[];
   workUnits: WorkUnitType[];
   status: 'idle' | 'loading' | 'failed';
 }
