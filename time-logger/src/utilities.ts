@@ -121,12 +121,26 @@ export const getProjectById = (projectArray: Array<ProjectType>, id: string): Pr
     return foundProject ? foundProject : {} as ProjectType;
 }
 
-export const shortDateFormat = (dateAsISOString?: string):string => {
-    if(dateAsISOString) {
-        return new Date(dateAsISOString).toISOString().slice(0, 10);
+export const shortDateFormat = (dateObject?: Date | null):string => {
+    if(dateObject) {
+        return new Date(dateObject).toISOString().slice(0, 10);
     } else {
         return new Date().toISOString().slice(0, 10);
     }
+}
+
+export const shortDateFormatChecker = (dateString: string) => {
+    const regex = /^\d{4}-\d{1,2}-\d{1,2}$/;
+    return regex.test(dateString);
+  }
+
+export const getWorkUnitsWithinDateRange = (earlyDate: string, lateDate:string, workUnits: WorkUnitType[]):WorkUnitType[] => {
+    if(!shortDateFormatChecker(earlyDate) || !shortDateFormatChecker(lateDate)) return [];
+    const range = {lo: new Date(`${earlyDate}:00:00:00`).getTime(), hi: new Date(`${lateDate}:23:59:59`).getTime()}
+    return workUnits.filter(u => {
+        const uDate = new Date(u.date).getTime();
+        return uDate <= range.hi && uDate >= range.lo;
+    })
 }
 
 export const uidGen = () => (uuidv4()); // it's worth putting this in utilities for now in case the UID format needs to be customised globally in the future
