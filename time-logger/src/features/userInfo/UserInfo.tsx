@@ -10,12 +10,11 @@ import {
 
 export function UserInfo() {
   const dispatch = useAppDispatch();
+  const userInfo = useAppSelector(selectUserInfo);
 
   useEffect(()=>{
     dispatch(getUserInfo())
   },[])
-
-  const userInfo = useAppSelector(selectUserInfo);
 
   return (
     <div>

@@ -8,7 +8,6 @@ export interface LineChartDataType {
 
 export interface RadarChartDataType {
     data: Array<RadarChartDataDataType>;
-    keys: Array<RadarChartDataKey>;
 }
 
 export interface LineChartDataDataType {
@@ -17,8 +16,8 @@ export interface LineChartDataDataType {
 }
 
 export interface RadarChartDataDataType {
-    name: string;
-    [key: string]: number | string;
+    subject: string;
+    A: number;
 }
 
 export interface LineChartDataKey {
@@ -27,53 +26,26 @@ export interface LineChartDataKey {
     colour?: string;
 }
 
-export interface RadarChartDataKey {
-    id: string;
-    name: string;
-    colour?: string;
-}
-
 export const workUnitsForRadarChart = (workUnits: WorkUnitType[], projects: ProjectType[]): RadarChartDataType => {
 
     // check the data is populated
-    if (!workUnits || !projects || !workUnits.length || !projects.length) return {data: [], keys: []};
+    if (!workUnits || !projects || !workUnits.length || !projects.length) return {data: []};
 
-    console.log("workUnits••••••••••••• ", workUnits);
+    var hoursByProjectCount: any = {};
+    workUnits.map((day => {
+        hoursByProjectCount[day.projectId] = hoursByProjectCount[day.projectId] === undefined ? 1 : hoursByProjectCount[day.projectId] + 1;
+    }));
+
+    const radarContent = Object.keys(hoursByProjectCount).map(key => (
+        {
+            subject: getProjectById(projects, key).name,
+            A: hoursByProjectCount[key]}
+    ));
 
     // create blank return object
     var returnObject: RadarChartDataType = {
-        data: [],
-        keys: []
+        data: radarContent
     }
-
-    // fill in the keys for displaying human-readable names
-    projects.map((proj) => {
-        returnObject.keys.push({
-            id: proj.id,
-            name: proj.name,
-            colour: proj.colour
-        });
-    })
-
-    makeDatesArray(workUnits[0].date, workUnits[workUnits.length - 1].date, (theDate) => {
-        returnObject.data.push({
-            name: theDate.slice(0, 10) // NOTE: can this use shortDateFormat(theDate) ? I don't have time to try and test it now
-        })
-    });
-
-    workUnits.map((unit) => {
-        const targetIndex = returnObject.data.findIndex(d => d.name === unit.date);
-        if (targetIndex === -1) {
-            console.log("Error: no date found within the dates array for possibly badly formatted work unit", unit);
-            return;
-        }
-        const targetObject: any = returnObject.data[targetIndex];
-        if (targetObject.hasOwnProperty(unit.projectId)) {
-            targetObject[unit.projectId] ++;
-        } else {
-            targetObject[unit.projectId] = 1;
-        }
-    })
 
     return returnObject;
 }
@@ -142,17 +114,6 @@ export const groupArrayByProperty = (arr: Array<any>, property: string) => {
       memo[x[property]].push(x);
       return memo;
     }, {});
-}
-
-export const sumWorkUnitHoursByProjectId = (workDays: WorkUnitType[]) => {
-    var hoursByProjectCount: any = {};
-    workDays.map((day => {
-        Object.keys(day).map(key => {
-            if(key === "name" || key === "date") return;
-            hoursByProjectCount[key] = hoursByProjectCount[key] === undefined ? 0 : hoursByProjectCount[key] + day[key];
-        })
-    }));
-    return hoursByProjectCount;
 }
 
 export const getProjectById = (projectArray: Array<ProjectType>, id: string): ProjectType => {

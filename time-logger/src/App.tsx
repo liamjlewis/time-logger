@@ -1,5 +1,6 @@
 import { UserInfo } from './features/userInfo/UserInfo';
 import { WorkDayList } from './features/workDayList/WorkDayList';
+import { UserData } from './features/userData/UserData';
 import { KeyStats } from './features/keyStats/KeyStats';
 import './App.scss';
 
@@ -34,6 +35,9 @@ function App() {
         <KeyStats />
         <WorkDayList />
       </main>
+      <footer>
+        <UserData />
+      </footer>
     </div>
   );
 }

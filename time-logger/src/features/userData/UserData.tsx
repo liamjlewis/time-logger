@@ -11,8 +11,10 @@ export function UserData() {
   const userData = useAppSelector(selectUserData);
 
   useEffect(()=>{
-    dispatch(getUserData(userInfo.id))
-  },[selectUserInfo])
+    if(userInfo.isLoggedIn) {
+      dispatch(getUserData(userInfo.id))
+    }
+  },[userInfo])
 
 
   return (

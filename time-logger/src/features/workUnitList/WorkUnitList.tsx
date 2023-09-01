@@ -1,12 +1,8 @@
-import {useEffect } from 'react';
-
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { getUserData, WorkUnitType, deleteWorkUnit, createWorkUnit } from '../userData/userDataSlice';
+import { WorkUnitType, deleteWorkUnit, createWorkUnit } from '../userData/userDataSlice';
 import { selectUserData } from '../userData/userDataSlice';
-import { selectUserInfo } from '../userInfo/userInfoSlice';
 
 import { groupArrayByProperty, getProjectById } from '../../utilities';
-import { chartColours } from "../../constants";
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -29,13 +25,6 @@ export function WorkUnitList(props: WorkUnitListProps) {
   const dispatch = useAppDispatch();
 
   const userData = useAppSelector(selectUserData);
-  const userInfo = useAppSelector(selectUserInfo);
-
-  useEffect(()=>{
-    if(userInfo.isLoggedIn){
-      dispatch(getUserData(userInfo.id))
-    }
-  },[userInfo])
 
   const workUnitsListedByProjectId: workUnitsListedByProjectIdType = groupArrayByProperty(userData.workUnits.filter(wU => wU.workDayId === props.workDayId), "projectId")
 
