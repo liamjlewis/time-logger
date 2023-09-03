@@ -10,7 +10,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Spinner from '../../components/Spinner';
-import LineChart from '../../components/LineChart';
+import LineChart from '../../components/lineChart';
 import StackedBarChart from '../../components/StackedBarChart';
 import RadarChart from '../../components/RadarChart';
 import DatePicker from "react-datepicker";
