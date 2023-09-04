@@ -18,8 +18,6 @@ export function UserData() {
 
 
   return (
-    <div>
-        {JSON.stringify(userData)}
-    </div>
-  );
+    <div></div>
+);
 }
