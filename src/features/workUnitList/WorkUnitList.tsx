@@ -17,7 +17,6 @@ export interface workUnitsListedByProjectIdType {
   [key: string]: Array<WorkUnitType>;
 }
 
-// NOTE: these pills need to be colour coded with the specific colour of that project
 // NOTE: these pills need a cross next to them that will delete the work unit
 //this will be it's own component that takes a list of work units and makes them into a nicely displayed, colour-coded list seperated by project and able to be deleted - ACTUALLY it would make more sense if this is a reduc component that's merely handed the workday ID, that way it can easily make the call to delete a work unit without a function being handed down to it.
 

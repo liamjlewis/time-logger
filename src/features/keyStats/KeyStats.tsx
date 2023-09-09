@@ -49,7 +49,6 @@ export function KeyStats() {
     setWorkUnitsProcessedLineChart(workUnitsForLineChart(userData.workUnits, userData.projects));
     setWorkUnitsProcessedRadarChart(workUnitsForRadarChart(userData.workUnits, userData.projects));
     //NOTE: this needs to limit the data to the last week since it's supposed to just be a quick overview
-    // NOTE: setWorkUnitsProcessedLineChart is being called more than it should be, look into this?
     userDataOld = JSON.stringify(userData);
   }, [userData])
 
