@@ -52,8 +52,10 @@ export const workUnitsForRadarChart = (workUnits: WorkUnitType[], projects: Proj
 
 export const workUnitsForLineChart = (workUnits: WorkUnitType[], projects: ProjectType[]): LineChartDataType => {
 
-    // check the data is populated
-    if (!workUnits || !projects || !workUnits.length || !projects.length) return {data: [], keys: []};
+// check the data is populated
+if (!workUnits || !projects || !workUnits.length || !projects.length) return {data: [], keys: []};
+
+    const workUnitsDateSorted:WorkUnitType[] = sortArrayByDateProperty(workUnits);
 
     // create blank return object
     var returnObject: LineChartDataType = {
@@ -70,13 +72,13 @@ export const workUnitsForLineChart = (workUnits: WorkUnitType[], projects: Proje
         });
     })
 
-    makeDatesArray(workUnits[0].date, workUnits[workUnits.length - 1].date, (theDate) => {
+    makeDatesArray(workUnitsDateSorted[0].date, workUnitsDateSorted[workUnitsDateSorted.length - 1].date, (theDate) => {
         returnObject.data.push({
             name: theDate.slice(0, 10) // NOTE: can this use shortDateFormat(theDate) ? I don't have time to try and test it now
         })
     });
 
-    workUnits.map((unit) => {
+    workUnitsDateSorted.map((unit) => {
         const targetIndex = returnObject.data.findIndex(d => d.name === unit.date);
         if (targetIndex === -1) {
             console.log("Error: no date found within the dates array for possibly badly formatted work unit", unit);
@@ -142,5 +144,7 @@ export const getWorkUnitsWithinDateRange = (earlyDate: string, lateDate:string, 
         return uDate <= range.hi && uDate >= range.lo;
     })
 }
+
+export const sortArrayByDateProperty = (array: any[]) => (array.toSorted((a:any, b:any) => new Date(a.date).getTime() - new Date(b.date).getTime())); // NOTE: .toSorted needs a polyfil since it's very newly released
 
 export const uidGen = () => (uuidv4()); // it's worth putting this in utilities for now in case the UID format needs to be customised globally in the future

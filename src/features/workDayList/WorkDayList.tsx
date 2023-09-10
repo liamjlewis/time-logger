@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectUserData } from '../userData/userDataSlice';
+import { selectUserData, createWorkDay, deleteWorkDay, WorkDayType } from '../userData/userDataSlice';
 import { selectUserInfo } from '../userInfo/userInfoSlice';
 
 import { WorkUnitList } from '../workUnitList/WorkUnitList';
@@ -7,10 +7,24 @@ import { WorkUnitList } from '../workUnitList/WorkUnitList';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import { useEffect, useState } from 'react';
+
+import { shortDateFormat } from '../../utilities';
 
 export function WorkDayList() {
   const userData = useAppSelector(selectUserData);
   const userInfo = useAppSelector(selectUserInfo);
+
+  const dispatch = useAppDispatch();
+
+  const [todayHasWorkDay, setTodayHasWorkDay] = useState<boolean>(false);
+
+  useEffect(() => {
+    const todaysDate = shortDateFormat();
+    const todayHasWorkDay = userData.workDays.findIndex(w => w.date === todaysDate) !== -1;
+    setTodayHasWorkDay(todayHasWorkDay)
+  }, [userData]);
 
   return (
     <div>
@@ -23,12 +37,14 @@ export function WorkDayList() {
       </Container>
       {userInfo.isLoggedIn &&  
         <Container>
-          {userData.workDays.map((workDay: any) => (
+          {!todayHasWorkDay && <Button variant="primary" onClick={() => dispatch(createWorkDay())}>New work day</Button>}
+          {userData.workDays.map((workDay: WorkDayType) => (
             <Row key={workDay.id} className="work-day-row">
               <Col sm={12} className="work-day-row__date-col">
                   <h3>
                     { workDay.date }
                   </h3>
+                  <span onClick={() => dispatch(deleteWorkDay(workDay.id))}>&#9447;</span>
               </Col>
               <Col sm={12} className="work-day-row__work-units-col">
                 <Container>
@@ -40,7 +56,7 @@ export function WorkDayList() {
                   }
                   <Row>
                     <h4>Work Units logged</h4>
-                    <WorkUnitList workDayId={workDay.id} />
+                    <WorkUnitList workDay={workDay} />
                   </Row>
                 </Container>
               </Col>

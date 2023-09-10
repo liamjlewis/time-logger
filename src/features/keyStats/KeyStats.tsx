@@ -40,24 +40,23 @@ export function KeyStats() {
   useEffect(() => {
     // this is a temporary fix since rendering is being triggered even when userData hasn't changed, it needs to be investigated in the future
     // Perhaps I'm misusing useAppSelector, does it need to be combined with state? https://redux-toolkit.js.org/tutorials/typescript#use-typed-hooks-in-components
-    if(userDataOld === JSON.stringify(userData)) return;
     
     if(userData.workUnits && userData.workUnits.length){
-      setWorkUnitsDateFiltered(getWorkUnitsWithinDateRange("2022-09-01", "2022-09-30", userData.workUnits));
+      if(selectedDateLow && selectedDateHigh){
+        setWorkUnitsDateFiltered(getWorkUnitsWithinDateRange(selectedDateLow, selectedDateHigh, userData.workUnits));
+      } else {
+        setWorkUnitsDateFiltered(userData.workUnits);
+      }
     }
-
-    setWorkUnitsProcessedLineChart(workUnitsForLineChart(userData.workUnits, userData.projects));
-    setWorkUnitsProcessedRadarChart(workUnitsForRadarChart(userData.workUnits, userData.projects));
     //NOTE: this needs to limit the data to the last week since it's supposed to just be a quick overview
+
     userDataOld = JSON.stringify(userData);
-  }, [userData])
+  }, [userData, selectedDateLow, selectedDateHigh])
 
   useEffect(() => {
-    if(selectedDateLow && selectedDateHigh) {
-      setWorkUnitsProcessedLineChart(workUnitsForLineChart(getWorkUnitsWithinDateRange(selectedDateLow, selectedDateHigh, userData.workUnits), userData.projects));
-      setWorkUnitsProcessedRadarChart(workUnitsForRadarChart(getWorkUnitsWithinDateRange(selectedDateLow, selectedDateHigh, userData.workUnits), userData.projects));
-    }
-  }, [selectedDateLow, selectedDateHigh]);
+      setWorkUnitsProcessedLineChart(workUnitsForLineChart(workUnitsDateFiltered, userData.projects));
+      setWorkUnitsProcessedRadarChart(workUnitsForRadarChart(workUnitsDateFiltered, userData.projects));
+  }, [workUnitsDateFiltered]);
 
   return (
     <div>
