@@ -1,4 +1,5 @@
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { useState, useEffect } from 'react';
 import { WorkUnitType, deleteWorkUnit, createWorkUnit } from '../userData/userDataSlice';
 import { selectUserData } from '../userData/userDataSlice';
 
@@ -17,36 +18,54 @@ export interface workUnitsListedByProjectIdType {
   [key: string]: Array<WorkUnitType>;
 }
 
+export interface displayListItem {
+  projectName: string;
+  projectId: string;
+  colour: string;
+  workUnits: Array<WorkUnitType>;
+}
+
 // NOTE: these pills need a cross next to them that will delete the work unit
 //this will be it's own component that takes a list of work units and makes them into a nicely displayed, colour-coded list seperated by project and able to be deleted - ACTUALLY it would make more sense if this is a reduc component that's merely handed the workday ID, that way it can easily make the call to delete a work unit without a function being handed down to it.
 
 export function WorkUnitList(props: WorkUnitListProps) {
+  const [displayList, setDisplayList] = useState<displayListItem[]>([]);
+  
   const dispatch = useAppDispatch();
-
   const userData = useAppSelector(selectUserData);
 
-  const workUnitsListedByProjectId: workUnitsListedByProjectIdType = groupArrayByProperty(userData.workUnits.filter(wU => wU.workDayId === props.workDayId), "projectId")
+  useEffect(() => {
+    const thisDaysWorkUnits = userData.workUnits.filter(wU => wU.workDayId === props.workDayId);
+    const workUnitsListedByProjectId: workUnitsListedByProjectIdType = groupArrayByProperty(thisDaysWorkUnits, "projectId");
+    const displayList = userData.projects.map((project):displayListItem => {
+      return {
+        projectName: project.name,
+        projectId: project.id,
+        colour: project.colour,
+        workUnits: workUnitsListedByProjectId[project.id] || []
+      };
+    });
+    setDisplayList(displayList)
+  }, [userData]);
 
-  return (
+  return ( 
     <div>
       <Container>
-        {Object.keys(workUnitsListedByProjectId).map(projectId => (
+        {displayList.map(displayItem => (
           <Row>
             <Col>
                 <h5>
-                  {getProjectById(userData.projects, projectId).name}
+                  {displayItem.projectName}
                 </h5>
-                {workUnitsListedByProjectId[projectId].map((workUnit, index) => (
+                {displayItem.workUnits.map((workUnit, index) => (
                   <>
                     <span>
-                      <Badge pill bg={getProjectById(userData.projects, projectId).colour}>{new Date(workUnit.createdTimeStamp).toLocaleString()} <span onClick={() => dispatch(deleteWorkUnit(workUnit.id))}>&#9447;</span></Badge>
+                      <Badge pill bg={displayItem.colour}>{new Date(workUnit.createdTimeStamp).toLocaleString().slice(-8, -3)} <span onClick={() => dispatch(deleteWorkUnit(workUnit.id))}>&#9447;</span></Badge>
                       &nbsp;
                     </span>
-                    {(index + 1) === workUnitsListedByProjectId[projectId].length && 
-                      <Badge pill bg={getProjectById(userData.projects, projectId).colour} onClick={() => dispatch(createWorkUnit({theWorkDayId: workUnit.workDayId, theProjectId: projectId}))}><span>+</span></Badge>
-                    }
                   </>
                 ))}
+                <Badge pill bg={displayItem.colour} onClick={() => dispatch(createWorkUnit({theWorkDayId: props.workDayId, theProjectId: displayItem.projectId}))}><span>+</span></Badge>
             </Col>
           </Row>
         ))}
