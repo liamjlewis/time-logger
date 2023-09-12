@@ -25,7 +25,7 @@ export function WorkDayList() {
     const todaysDate = shortDateFormat();
     const todayHasWorkDay = userData.workDays.findIndex(w => w.date === todaysDate) !== -1;
     setTodayHasWorkDay(todayHasWorkDay)
-    const displayListOrdered = userData.workDays.toSorted((a:WorkDayType, b:WorkDayType) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    const displayListOrdered = userData.workDays.toSorted((a:WorkDayType, b:WorkDayType) => new Date(b.date).getTime() - new Date(a.date).getTime()) // NOTE: .toSorted needs a polyfil or workaround since it's brand new
     setDisplayList(displayListOrdered);
   }, [userData]);
 

@@ -25,7 +25,12 @@ import {
   shortDateFormat 
 } from '../../utilities';
 
-let userDataOld: string = "";
+//default dates
+const oneYearAgo = new Date();
+oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+const defaultDateLow = shortDateFormat(oneYearAgo);
+const defaultDateHigh = shortDateFormat(new Date());
+// NOTE: these dates should be taken from some config settings and used in the initial call to the API since right now it's just GETing all the days and available data.
 
 export function KeyStats() {
   const userData = useAppSelector(selectUserData);
@@ -34,23 +39,11 @@ export function KeyStats() {
   const [workUnitsProcessedLineChart, setWorkUnitsProcessedLineChart] = useState<LineChartDataType | null>(null);
   const [workUnitsProcessedRadarChart, setWorkUnitsProcessedRadarChart] = useState<RadarChartDataType | null>(null);
   const [workUnitsDateFiltered, setWorkUnitsDateFiltered] = useState<Array<WorkUnitType>>([]);
-  const [selectedDateLow, setSelectedDateLow] = useState<string| null>(null);
-  const [selectedDateHigh, setSelectedDateHigh] = useState<string| null>(null);
+  const [selectedDateLow, setSelectedDateLow] = useState<string>(defaultDateLow);
+  const [selectedDateHigh, setSelectedDateHigh] = useState<string>(defaultDateHigh);
 
   useEffect(() => {
-    // this is a temporary fix since rendering is being triggered even when userData hasn't changed, it needs to be investigated in the future
-    // Perhaps I'm misusing useAppSelector, does it need to be combined with state? https://redux-toolkit.js.org/tutorials/typescript#use-typed-hooks-in-components
-    
-    if(userData.workUnits && userData.workUnits.length){
-      if(selectedDateLow && selectedDateHigh){
-        setWorkUnitsDateFiltered(getWorkUnitsWithinDateRange(selectedDateLow, selectedDateHigh, userData.workUnits));
-      } else {
-        setWorkUnitsDateFiltered(userData.workUnits);
-      }
-    }
-    //NOTE: this needs to limit the data to the last week since it's supposed to just be a quick overview
-
-    userDataOld = JSON.stringify(userData);
+    setWorkUnitsDateFiltered(getWorkUnitsWithinDateRange(selectedDateLow, selectedDateHigh, userData.workUnits));
   }, [userData, selectedDateLow, selectedDateHigh])
 
   useEffect(() => {
