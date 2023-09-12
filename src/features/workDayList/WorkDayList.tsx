@@ -19,11 +19,14 @@ export function WorkDayList() {
   const dispatch = useAppDispatch();
 
   const [todayHasWorkDay, setTodayHasWorkDay] = useState<boolean>(false);
+  const [displayList, setDisplayList] = useState<WorkDayType[]>([]);
 
   useEffect(() => {
     const todaysDate = shortDateFormat();
     const todayHasWorkDay = userData.workDays.findIndex(w => w.date === todaysDate) !== -1;
     setTodayHasWorkDay(todayHasWorkDay)
+    const displayListOrdered = userData.workDays.toSorted((a:WorkDayType, b:WorkDayType) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    setDisplayList(displayListOrdered);
   }, [userData]);
 
   return (
@@ -38,7 +41,7 @@ export function WorkDayList() {
       {userInfo.isLoggedIn &&  
         <Container>
           {!todayHasWorkDay && <Button variant="primary" onClick={() => dispatch(createWorkDay())}>New work day</Button>}
-          {userData.workDays.map((workDay: WorkDayType) => (
+          {displayList.map((workDay: WorkDayType) => (
             <Row key={workDay.id} className="work-day-row">
               <Col sm={12} className="work-day-row__date-col">
                   <h3>
