@@ -223,8 +223,12 @@ export const userDataSlice = createSlice({
       })
       .addCase(deleteWorkDay.fulfilled, (state: UserDataStateType, action) => {
         state.status = 'idle';
-        if(!!action.payload) {
-          const index = state.workDays.findIndex((item: WorkDayType) => item.id === action.payload);
+        const deletedWorkDayId = action.payload;
+        if(!!deletedWorkDayId) {
+          // delete all related work units
+          state.workUnits = state.workUnits.filter((workUnit: WorkUnitType) => workUnit.workDayId !== deletedWorkDayId);
+          // delete the work day
+          const index = state.workDays.findIndex((workDay: WorkDayType) => workDay.id === deletedWorkDayId);
           if (index !== -1) {
             state.workDays.splice(index, 1);
           }
