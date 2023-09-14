@@ -41,7 +41,7 @@ const initialState: UserDataStateType = {
   status: 'idle',
 };
 
-export const getUserData = createAsyncThunk(
+export const getUserData = createAsyncThunk( // NOTE: once the API is improved this is where config.defaultFirstDayOfData can be used to send a date range for the initial GET
   'userData/getUserData',
   async (userId: string) => {
     let theResponse = null;

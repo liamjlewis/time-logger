@@ -25,12 +25,13 @@ import {
   shortDateFormat 
 } from '../../utilities';
 
+import config  from "../../config.json";
+
 //default dates
 const oneYearAgo = new Date();
-oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+oneYearAgo.setDate(oneYearAgo.getDate() - config.defaultFirstDayOfData)
 const defaultDateLow = shortDateFormat(oneYearAgo);
 const defaultDateHigh = shortDateFormat(new Date());
-// NOTE: these dates should be taken from some config settings and used in the initial call to the API since right now it's just GETing all the days and available data.
 
 export function KeyStats() {
   const userData = useAppSelector(selectUserData);
