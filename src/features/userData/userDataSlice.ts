@@ -53,7 +53,12 @@ export const getUserData = createAsyncThunk( // NOTE: once the API is improved t
       },
      body: JSON.stringify({id: userId})
     })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP status code: ${response.status}`);
+      }
+      return response.json();
+    })
     .then((data) => theResponse = data)
     .catch(error => console.log('ERROR: ', error));
     return theResponse;
@@ -86,7 +91,9 @@ export const createWorkUnit = createAsyncThunk(
      body: JSON.stringify(newWorkUnit)
     })
     .then((response) => {
-      if(response.status === 201){
+      if (!response.ok) {
+        throw new Error(`HTTP status code: ${response.status}`);
+      } else if(response.status === 201){
         theResponse = newWorkUnit;
       }
     })
@@ -108,7 +115,9 @@ export const deleteWorkUnit = createAsyncThunk(
      body: JSON.stringify({id: workUnitId})
     })
     .then((response) => {
-      if(response.status === 200){
+      if (!response.ok) {
+        throw new Error(`HTTP status code: ${response.status}`);
+      } else if(response.status === 200){
         theResponse = workUnitId; // this is used as the action payload so the workUnit can be deleted in the redux store too
       }
     })
@@ -134,7 +143,9 @@ export const createWorkDay = createAsyncThunk(
      body: JSON.stringify(newWorkDay)
     })
     .then((response) => {
-      if(response.status === 201){
+      if (!response.ok) {
+        throw new Error(`HTTP status code: ${response.status}`);
+      } else if(response.status === 201){
         theResponse = newWorkDay;
       }
     })
@@ -156,7 +167,9 @@ export const deleteWorkDay = createAsyncThunk(// NOTE: when a work day is delete
      body: JSON.stringify({id: workDayId})
     })
     .then((response) => {
-      if(response.status === 200){
+      if (!response.ok) {
+        throw new Error(`HTTP status code: ${response.status}`);
+      } else if(response.status === 200){
         theResponse = workDayId; // this is used as the action payload so the workUnit can be deleted in the redux store too
       }
     })
