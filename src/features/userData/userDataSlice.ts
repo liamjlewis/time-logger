@@ -117,7 +117,7 @@ export const deleteWorkUnit = createAsyncThunk(
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP status code: ${response.status}`);
-      } else if(response.status === 200){
+      } else if(response.status === 204){
         theResponse = workUnitId; // this is used as the action payload so the workUnit can be deleted in the redux store too
       }
     })
@@ -169,7 +169,7 @@ export const deleteWorkDay = createAsyncThunk(// NOTE: when a work day is delete
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP status code: ${response.status}`);
-      } else if(response.status === 200){
+      } else if(response.status === 204){
         theResponse = workDayId; // this is used as the action payload so the workUnit can be deleted in the redux store too
       }
     })
