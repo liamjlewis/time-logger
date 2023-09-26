@@ -51,19 +51,17 @@ export function WorkUnitList(props:any) {
   return ( 
     <div>
       <Container>
-        {displayList.map(displayItem => (
-          <Row>
+        {displayList.map((displayItem, index) => (
+          <Row key={index}>
             <Col>
                 <h5>
                   {displayItem.projectName}
                 </h5>
                 {displayItem.workUnits.map((workUnit, index) => (
-                  <>
-                    <span>
-                      <Badge pill bg={displayItem.colour}>{new Date(workUnit.createdTimeStamp).toLocaleString().slice(-8, -3)} <span onClick={() => dispatch(deleteWorkUnit(workUnit.id))}>&#9447;</span></Badge>
-                      &nbsp;
-                    </span>
-                  </>
+                  <span key={index}>
+                    <Badge pill bg={displayItem.colour}>{new Date(workUnit.createdTimeStamp).toLocaleString().slice(-8, -3)} <span onClick={() => dispatch(deleteWorkUnit(workUnit.id))}>&#9447;</span></Badge>
+                    &nbsp;
+                  </span>
                 ))}
                 <Badge pill bg={displayItem.colour} onClick={() => dispatch(createWorkUnit({theWorkDayId: props.workDay.id, theProjectId: displayItem.projectId, optionalDate: props.workDay.date}))}><span>+</span></Badge>
             </Col>
