@@ -43,7 +43,8 @@ const initialState: UserDataStateType = {
 
 export const getUserData = createAsyncThunk( // NOTE: once the API is improved this is where config.defaultFirstDayOfData can be used to send a date range for the initial GET
   'userData/getUserData',
-  async (userId: string) => {
+  async (_notUsed, { getState }) => {
+    const state:any = getState();
     let theResponse = null;
     await fetch("/userData", {
       method: 'POST',
@@ -51,7 +52,7 @@ export const getUserData = createAsyncThunk( // NOTE: once the API is improved t
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-     body: JSON.stringify({id: userId})
+     body: JSON.stringify({userId: state.userInfo.id})
     })
     .then((response) => {
       if (!response.ok) {
