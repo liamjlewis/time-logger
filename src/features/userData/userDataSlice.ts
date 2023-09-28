@@ -104,7 +104,8 @@ export const createWorkUnit = createAsyncThunk(
 
 export const deleteWorkUnit = createAsyncThunk(
   'userData/deleteWorkUnit',
-  async (workUnitId: string) => {
+  async (workUnitId: string, { getState }) => {
+    const state:any = getState();
     let theResponse = null;
     await fetch("/userData/workUnit", {
       method: 'DELETE',
@@ -112,7 +113,7 @@ export const deleteWorkUnit = createAsyncThunk(
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-     body: JSON.stringify({id: workUnitId})
+     body: JSON.stringify({userId: state.userInfo.id, workUnitId: workUnitId})
     })
     .then((response) => {
       if (!response.ok) {
@@ -156,7 +157,8 @@ export const createWorkDay = createAsyncThunk(
 
 export const deleteWorkDay = createAsyncThunk(// NOTE: when a work day is deleted it doesn't dissapear from the chart, I assume this is because there are work units still referencing it, or perhaps deleting it doesn't cause a re-render for some reason.
   'userData/deleteWorkDay',
-  async (workDayId: string) => {
+  async (workDayId: string, { getState }) => {
+    const state:any = getState();
     let theResponse = null;
     await fetch("/userData/workDay", {
       method: 'DELETE',
@@ -164,7 +166,7 @@ export const deleteWorkDay = createAsyncThunk(// NOTE: when a work day is delete
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-     body: JSON.stringify({id: workDayId})
+     body: JSON.stringify({userId: state.userInfo.id, workDayId})
     })
     .then((response) => {
       if (!response.ok) {
