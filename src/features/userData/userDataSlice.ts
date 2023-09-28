@@ -74,7 +74,8 @@ interface CreateWorkUnitPropsType {
 
 export const createWorkUnit = createAsyncThunk(
   'userData/createWorkUnit',
-  async (props: CreateWorkUnitPropsType) => {
+  async (props: CreateWorkUnitPropsType, { getState }) => {
+    const state:any = getState();
     let theResponse = null;
     const newWorkUnit: WorkUnitType = {
       id: uidGen(),
@@ -89,12 +90,12 @@ export const createWorkUnit = createAsyncThunk(
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-     body: JSON.stringify(newWorkUnit)
+     body: JSON.stringify({userId: state.userInfo.id, workUnit: newWorkUnit})
     })
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP status code: ${response.status}`);
-      } else if(response.status === 201){
+      } else if(response.status === 200){
         theResponse = newWorkUnit;
       }
     })
@@ -147,7 +148,7 @@ export const createWorkDay = createAsyncThunk(
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP status code: ${response.status}`);
-      } else if(response.status === 201){
+      } else if(response.status === 200){
         theResponse = newWorkDay;
       }
     })
