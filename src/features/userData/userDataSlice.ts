@@ -131,7 +131,8 @@ export const deleteWorkUnit = createAsyncThunk(
 
 export const createWorkDay = createAsyncThunk(
   'userData/createWorkDay',
-  async () => {
+  async (_notUsed, { getState }) => {
+    const state:any = getState();
     let theResponse = null;
     const newWorkDay: WorkDayType = {
       id: uidGen(),
@@ -143,7 +144,7 @@ export const createWorkDay = createAsyncThunk(
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-     body: JSON.stringify(newWorkDay)
+     body: JSON.stringify({userId: state.userInfo.id, workDay: newWorkDay})
     })
     .then((response) => {
       if (!response.ok) {
