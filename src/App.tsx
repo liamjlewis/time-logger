@@ -37,6 +37,7 @@ function App() {
       </main>
       <footer>
         <UserData />
+        <span>Copyright {new Date().getFullYear()}</span>
       </footer>
     </div>
   );
