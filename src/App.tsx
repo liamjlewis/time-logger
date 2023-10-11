@@ -1,4 +1,3 @@
-import { UserInfo } from './features/userInfo/UserInfo';
 import { WorkDayList } from './features/workDayList/WorkDayList';
 import { UserData } from './features/userData/UserData';
 import { KeyStats } from './features/keyStats/KeyStats';
@@ -14,18 +13,36 @@ const theData = [{"id":"japan","color":"hsl(36, 70%, 50%)","data":[{"x":"plane",
 function App() {
   return (
     <div className="App">
-      <NavArea />
-      <header className="App-header">
-        <h1>Where does the time go?</h1>
-      </header>
-      <main>
-        <KeyStats />
-        <WorkDayList />
-      </main>
-      <footer>
-        <UserData />
-        <span>Copyright {new Date().getFullYear()}</span>
-      </footer>
+      <Container>
+        <Row>
+          <Col>
+            <NavArea />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <header className="App-header">
+              <h1>Where does the time go?</h1>
+            </header>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <main>
+              <KeyStats />
+              <WorkDayList />
+            </main>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <footer>
+              <UserData />
+              <span>Copyright {new Date().getFullYear()}</span>
+            </footer>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
