@@ -2,6 +2,7 @@ import { UserInfo } from './features/userInfo/UserInfo';
 import { WorkDayList } from './features/workDayList/WorkDayList';
 import { UserData } from './features/userData/UserData';
 import { KeyStats } from './features/keyStats/KeyStats';
+import { NavArea } from './features/navArea/NavArea';
 import './App.scss';
 
 import Container from 'react-bootstrap/Container';
@@ -13,21 +14,7 @@ const theData = [{"id":"japan","color":"hsl(36, 70%, 50%)","data":[{"x":"plane",
 function App() {
   return (
     <div className="App">
-      <nav>
-        <Container>
-          <Row>
-            <Col className="d-flex justify-content-start">
-              <a id="menu-toggle" role="menuitem" aria-label="Open the menu">
-                &#9776;
-              </a>
-            </Col>
-            <Col className="d-flex justify-content-end">
-              &#9731;
-              <UserInfo />
-            </Col>
-          </Row>
-        </Container>
-      </nav>
+      <NavArea />
       <header className="App-header">
         <h1>Where does the time go?</h1>
       </header>
