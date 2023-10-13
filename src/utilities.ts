@@ -51,26 +51,19 @@ export const workUnitsForRadarChart = (workUnits: WorkUnitType[], projects: Proj
 }
 
 export const workUnitsForLineChart = (workUnits: WorkUnitType[], projects: ProjectType[]): LineChartDataType => {
+// NOTE: when this is changed to not be used by line chart and only the bar chart remove "LineChart" above
 
 // check the data is populated
 if (!workUnits || !projects || !workUnits.length || !projects.length) return {data: [], keys: []};
 
     const workUnitsDateSorted:WorkUnitType[] = sortArrayByDateProperty(workUnits);
+    const projectsInThisSelection: any = {};
 
     // create blank return object
     var returnObject: LineChartDataType = {
         data: [],
         keys: []
     }
-
-    // fill in the keys for displaying human-readable names
-    projects.map((proj) => {
-        returnObject.keys.push({
-            id: proj.id,
-            name: proj.name,
-            colour: proj.colour
-        });
-    })
 
     makeDatesArray(workUnitsDateSorted[0].date, workUnitsDateSorted[workUnitsDateSorted.length - 1].date, (theDate) => {
         returnObject.data.push({
@@ -79,6 +72,7 @@ if (!workUnits || !projects || !workUnits.length || !projects.length) return {da
     });
 
     workUnitsDateSorted.map((unit) => {
+        projectsInThisSelection[unit.projectId] = null;
         const targetIndex = returnObject.data.findIndex(d => d.name === unit.date);
         if (targetIndex === -1) {
             console.log("Error: no date found within the dates array for possibly badly formatted work unit", unit);
@@ -90,6 +84,16 @@ if (!workUnits || !projects || !workUnits.length || !projects.length) return {da
         } else {
             targetObject[unit.projectId] = 1;
         }
+    })
+
+    // fill in the keys for displaying human-readable names
+    projects.map((proj) => {
+        if(!projectsInThisSelection.hasOwnProperty(proj.id)) return; 
+        returnObject.keys.push({
+            id: proj.id,
+            name: proj.name,
+            colour: proj.colour
+        });
     })
 
     return returnObject;
